@@ -1,4 +1,6 @@
-/* "use client"
+/* 
+
+"use client"
 
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
@@ -20,6 +22,18 @@ interface Data {
   year: number;
   uploaded_date: Date;
 }
+
+const highlightText = (text: string, searchTerms: string[]) => {
+  if (!searchTerms.length) return text;
+
+  // Escape special characters in search terms
+  const escapedTerms = searchTerms.map(term => term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+
+  // Combine terms into a single regex with "or" condition
+  const regex = new RegExp(`(${escapedTerms.join('|')})`, 'gi');
+
+  return text.replace(regex, '<mark>$1</mark>');
+};
 
 export default function SearchResults() {
   const [data, setData] = useState<Data[]>([]);
@@ -60,7 +74,7 @@ export default function SearchResults() {
             searchTerms.some(term => item.institution.toLowerCase().includes(term)) ||
             searchTerms.some(term => item.exam_type.toLowerCase().includes(term)) ||
             searchTerms.some(term => item.education_level.toLowerCase().includes(term)) ||
-            searchTerms.some(term => item.description.toLowerCase().includes(term)) ||
+           // searchTerms.some(term => item.description.toLowerCase().includes(term)) ||
             searchTerms.some(term => itemYearString.includes(term)) // Check if any term matches the year
           );
         });
@@ -125,8 +139,8 @@ export default function SearchResults() {
                 >
                   <div className="flex flex-col items-start gap-0.5 lg:gap-1">
                     <div className="text-md lg:text-lg font-bold text-teal-600">
-                      <div>{item.institution}</div>
-                      <div>{item.subject}</div>
+                      <span dangerouslySetInnerHTML={{ __html: highlightText(item.institution, searchQuery.toLowerCase().split(' ')) }} />
+                      <span dangerouslySetInnerHTML={{ __html: highlightText(item.subject, searchQuery.toLowerCase().split(' ')) }} />
                     </div>
                     <div className="text-sm lg:text-lg text-gray-500">
                       Annual Examinations {item.class} - {item.year}

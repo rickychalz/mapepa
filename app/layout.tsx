@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} relative flex flex-col justify-between split-background min-h-screen max-w-screen-xl mx-auto`}
+        className={`${inter.className} relative flex flex-col justify-between split-background min-h-[100dvh] max-w-screen-xl mx-auto`}
       >
         <Header />
         {children}

@@ -1,4 +1,5 @@
 import { RiMenu2Fill } from "@remixicon/react";
+import Link from "next/link";
 import React from "react";
 
 function Header() {
@@ -16,7 +17,7 @@ function Header() {
         <div className="hidden md:flex w-full items-center justify-between max-w-7xl p-4 text-sm">
           <div className="">
             <ul className="flex gap-8">
-              <li>Home</li>
+              <li><Link href='/'>Home</Link></li>
               <li>About Us</li>
               <li>Pricing</li>
               <li>FAQs</li>

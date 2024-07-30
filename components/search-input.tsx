@@ -25,17 +25,16 @@ export const SearchInput = ({ defaultValue }: iDefault) => {
 
   // We are now routing the search results to another page but still on the same page
 
+  // If the user clicks enter on the keyboard, the input value should be submitted for search
   const handleSearch = () => {
     const query = inputValue?.trim();
     if (query) {
       router.push(`/search-results?q=${encodeURIComponent(query)}`);
-    } else {
-      router.push("/search-results");
     }
   };
 
   const handleKeyPress = (event: { key: any }) => {
-    if (event.key === "Enter") return handleSearch();
+    if (event.key === "Enter") handleSearch();
   };
 
   return (
